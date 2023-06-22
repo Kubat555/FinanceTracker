@@ -14,10 +14,21 @@ namespace FinanceTracker.Controllers
             _context = context;
         }
 
-        public async Task<ActionResult> Index()
+
+        public async Task<ActionResult> Index(DateTime? startDate, DateTime? endDate)
         {
-            DateTime StartDate = DateTime.Today.AddDays(-6);
-            DateTime EndDate = DateTime.Today;
+            DateTime StartDate = startDate ?? DateTime.Today.AddDays(-6);
+            DateTime EndDate = endDate ?? DateTime.Today;
+
+            if (StartDate > EndDate)
+            {
+                DateTime temp = StartDate;
+                StartDate = EndDate;
+                EndDate = temp;
+            }
+
+            ViewBag.StartDate = StartDate;
+            ViewBag.EndDate = EndDate;
 
             List<Transaction> SelectedTransactions = await _context.Transactions
                 .Include(x => x.Category)
@@ -80,7 +91,7 @@ namespace FinanceTracker.Controllers
                 .ToList();
 
             //Combine Income & Expense
-            string[] Last7Days = Enumerable.Range(0, 7)
+            string[] Last7Days = Enumerable.Range(0, (int)(EndDate - StartDate).TotalDays + 1)
                 .Select(i => StartDate.AddDays(i).ToString("dd-MMM"))
                 .ToArray();
 

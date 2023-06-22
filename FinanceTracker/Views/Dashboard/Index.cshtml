@@ -8,12 +8,14 @@
 
 <div class="row mb-4">
     <div class="col-md-12">
-        <div class="d-flex flex-row align-items-center justify-content-around widget">
-            <h6 class="p-3" >Choose the date:</h6>
+        <form method="get" action="@Url.Action("Index", "Dashboard")" class="d-flex flex-row align-items-center justify-content-around widget">
+            <h5 class="p-3" >Choose the date:</h5>
+            <ejs-datepicker id="startDate" name="startDate" placeholder="StartDate" format="MMM-dd-yyyy" width="250px" value="@ViewBag.StartDate"></ejs-datepicker>
+            <ejs-datepicker id="endDate" name="endDate" placeholder="EndDate" format="MMM-dd-yyyy" width="250px"value="@ViewBag.EndDate"></ejs-datepicker>
             <div>
-                <ejs-datepicker id="startDate" ejs-for="Date" placeholder="StartDate" format="MMM-dd-yyyy"></ejs-datepicker>
+                <button class="btn btn-success" type="submit">Apply</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -56,7 +58,7 @@
                 </svg>
             </div>
             <div class="d-flex flex-column m-auto py-3">
-                <span class="lead">Balance</span>
+                <span class="lead">Difference</span>
                 <h1 class="display-6 fw-bold">@ViewBag.Balance</h1>
             </div>
         </div>
